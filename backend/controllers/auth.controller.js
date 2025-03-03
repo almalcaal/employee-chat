@@ -35,6 +35,8 @@ export const signupUser = async (req, res) => {
 
     if (user) {
       generateToken(res, user._id);
+      await user.save();
+
       res.status(201).json({
         _id: user._id,
         fullName: user.fullName,
@@ -57,9 +59,12 @@ export const loginUser = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    const correctPassword = await user.matchPassword(password);
+    if (!user) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-    if (!user && !correctPassword) {
+    const correctPassword = await user.matchPassword(password);
+    if (!correctPassword) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
