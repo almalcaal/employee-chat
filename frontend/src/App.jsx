@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { Routes, Route, Navigate } from "react-router";
 import Navbar from "./components/common/Navbar.component.jsx";
 import HomeScreen from "./screens/common/Home.screen.jsx";
@@ -5,14 +7,16 @@ import SignUpScreen from "./screens/common/SignUp.screen.jsx";
 import LoginScreen from "./screens/common/Login.screen.jsx";
 import SettingsScreen from "./screens/common/Settings.screen.jsx";
 import ProfileScreen from "./screens/common/Profile.screen.jsx";
+
 import { useAuthStore } from "./store/useAuthStore.js";
-import { useEffect } from "react";
+import { useThemeStore } from "./store/useThemeStore.js";
 
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { theme } = useThemeStore();
 
   useEffect(() => {
     checkAuth();
@@ -28,7 +32,7 @@ const App = () => {
     );
 
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar />
       <Routes>
         <Route
