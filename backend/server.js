@@ -13,7 +13,11 @@ const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 // body parser
-app.use(express.json());
+app.use(
+  express.json({
+    limit: "100mb",
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 
 // cookie parser
