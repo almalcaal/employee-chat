@@ -3,13 +3,18 @@ import cors from "cors";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import path from "path";
-dotenv.config();
 
 import { connectDB } from "./lib/db.js";
 import { app, server } from "./lib/socket.js";
 
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
+
+import job from "./cron.js";
+
+dotenv.config();
+
+job.start();
 
 const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
